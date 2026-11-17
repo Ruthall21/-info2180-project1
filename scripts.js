@@ -1,39 +1,39 @@
+
 /* Add your JavaScript to this file */
 
 document.addEventListener('DOMContentLoaded', function () {
-  const form = document.querySelector('.newsletter form');
-  const emailInput = document.querySelector('#email');
-  const messageDiv = document.querySelector('.newsletter .message');
 
-  if (!form || !emailInput || !messageDiv) return;
+    const form = document.querySelector('.newsletter form');
+    const emailInput = document.querySelector('#email');
+    const messageDiv = document.querySelector('.newsletter .message');
 
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
+    form.addEventListener('submit', function (event) {
 
-    const email = emailInput.value.trim();
+        event.preventDefault();
 
-    // Simple validation: must contain "@" and "."
-    if (!email || !email.includes('@') || !email.includes('.')) {
-      messageDiv.textContent = 'Please enter a valid email address (e.g. name@example.com).';
-      messageDiv.classList.remove('success');
-      messageDiv.classList.add('error');
-      emailInput.focus();
-      return;
-    }
+        const email = emailInput.value.trim();
 
-    // Success message
-    messageDiv.textContent = `Thank you! Your email address "${email}" has been added to our mailing list!`;
-    messageDiv.classList.remove('error');
-    messageDiv.classList.add('success');
+        // Check if the email field is empty or invalid
+        if (!email || !emailInput.checkValidity()) {
 
-    // optional: clear input
-    emailInput.value = '';
+            messageDiv.textContent = 'Please enter a valid email address.';
+            messageDiv.classList.remove('success');
+            messageDiv.classList.add('error');
 
-    // Simulate small visual effect (keep simple)
-    messageDiv.style.opacity = '0';
-    setTimeout(() => {
-      messageDiv.style.transition = 'opacity 320ms ease-in';
-      messageDiv.style.opacity = '1';
-    }, 10);
-  });
+            emailInput.focus();
+
+        } else {
+
+            // Display success message
+            messageDiv.textContent = `Thank you! Your email address ${email} has been added to our mailing list!`;
+
+            messageDiv.classList.remove('error');
+            messageDiv.classList.add('success');
+
+            // Clear the email input
+            emailInput.value = '';
+        }
+
+    });
+
 });
